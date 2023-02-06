@@ -27,9 +27,10 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
         title = "Albums"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = true
         let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: nil)
         self.navigationItem.leftBarButtonItem = leftButton
 
@@ -46,7 +47,7 @@ class ViewController: UIViewController {
     private func setupLayout() {
         NSLayoutConstraint.activate([
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
-        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor),
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
