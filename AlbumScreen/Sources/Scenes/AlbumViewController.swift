@@ -201,17 +201,17 @@ extension AlbumViewController: UICollectionViewDataSource, UICollectionViewDeleg
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCellWithFourImages.fourImagesIdentifier, for: indexPath) as? ScrollCellWithFourImages
             cell?.configure(cell: model)
             return cell ?? UICollectionViewCell()
-        case .listCell:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell
-            cell?.configure(cell: model)
-            return cell ?? UICollectionViewCell()
-        case .listCellWithLock:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCellWithLock.lockIdentifier, for: indexPath) as? ListCellWithLock
-            cell?.configure(cell: model)
-            return cell ?? UICollectionViewCell()
         case .scrollCellWithHeart:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCellWithHeart.heartIdentifier, for: indexPath) as? ScrollCellWithHeart
             cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .listCell:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell
+            cell?.configure(cell: model, lastCell: indexPath.item == (cellsData[indexPath.section].options.count - 1))
+            return cell ?? UICollectionViewCell()
+        case .listCellWithLock:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCellWithLock.lockIdentifier, for: indexPath) as? ListCellWithLock
+            cell?.configure(cell: model, lastCell: indexPath.item == (cellsData[indexPath.section].options.count - 1))
             return cell ?? UICollectionViewCell()
         }
     }

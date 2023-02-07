@@ -110,10 +110,11 @@ class ListCell: UICollectionViewCell {
         countLabel.text = nil
     }
 
-    public func configure(cell: AlbumsOption) {
+    public func configure(cell: AlbumsOption, lastCell: Bool = false) {
         image.image = cell.icon
         nameCell.text = cell.name
         countLabel.text = cell.counter
+        separator.isHidden = lastCell
     }
 }
 
