@@ -1,5 +1,5 @@
 //
-//  CollectionViewCell.swift
+//  ScrollCell.swift
 //  AlbumScreen
 //
 //  Created by Ваня Сокол on 06.02.2023.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class CollectionViewCell: UICollectionViewCell {
+class ScrollCell: UICollectionViewCell {
 
-    static let identifier = "CollectionViewCell"
+    static let identifier = "ScrollCell"
 
     // MARK: - Outlets
 

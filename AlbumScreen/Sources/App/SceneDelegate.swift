@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         foryouViewController.view.backgroundColor = .systemOrange
         foryouViewController.tabBarItem = UITabBarItem(title: "For You", image: UIImage(systemName: "heart.text.square.fill"), tag: 1)
 
-        let albumsNavigationController = UINavigationController(rootViewController: ViewController())
+        let albumsNavigationController = UINavigationController(rootViewController: AlbumViewController())
         albumsNavigationController.tabBarItem = UITabBarItem(title: "Albums", image: UIImage(systemName: "rectangle.stack.fill"), tag: 2)
 
         let searchViewController = UIViewController()
