@@ -21,6 +21,7 @@ struct AlbumsOption {
 
 enum AlbumsType {
     case scrollCell
+    case scrollCellWithHeart
     case scrollCellWithfourPhotos
     case listCell
     case listCellWithLock
@@ -30,17 +31,17 @@ extension Section {
     static func getSettingsCell() -> [Section] {
         return [
             Section(options: [
-                AlbumsOption(name: <#T##String#>, icon: <#T##UIImage#>, counter: 5959, typeCell: .scrollCell),
-                AlbumsOption(name: <#T##String#>, icon: <#T##UIImage#>, counter: 13, typeCell: .scrollCell),
-                AlbumsOption(name: <#T##String#>, icon: <#T##UIImage#>, counter: <#T##String#>, typeCell: .scrollCell),
-                AlbumsOption(name: <#T##String#>, icon: <#T##UIImage#>, counter: <#T##String#>, typeCell: .scrollCell),
-                AlbumsOption(name: <#T##String#>, icon: <#T##UIImage#>, counter: <#T##String#>, typeCell: .scrollCell),
-                AlbumsOption(name: <#T##String#>, icon: <#T##UIImage#>, counter: <#T##String#>, typeCell: .scrollCell),
-                AlbumsOption(name: <#T##String#>, icon: <#T##UIImage#>, counter: <#T##String#>, typeCell: .scrollCell)
+                AlbumsOption(name: "Recent", icon: UIImage(named: "nedevnie"), counter: "5959", typeCell: .scrollCell),
+                AlbumsOption(name: "Favourities", icon: UIImage(named: "izbrannoe"), counter: "13", typeCell: .scrollCellWithHeart),
+                AlbumsOption(name: "WhatsApp", icon: UIImage(named: "whatsapp"), counter: "211", typeCell: .scrollCell),
+                AlbumsOption(name: "TikTok", icon: UIImage(named: "tiktok"), counter: "5", typeCell: .scrollCell),
+                AlbumsOption(name: "SnapChat", icon: UIImage(named: "snapchat"), counter: "3", typeCell: .scrollCell),
+                AlbumsOption(name: "Instagram", icon: UIImage(named: "instagram"), counter: "17", typeCell: .scrollCell),
+                AlbumsOption(name: "VSCO", icon: UIImage(named: "vsco"), counter: "30", typeCell: .scrollCell)
             ]),
             Section(options: [
                 AlbumsOption(name: "People", icon: nil, counter: "17", typeCell: .scrollCellWithfourPhotos),
-                AlbumsOption(name: "Places", icon: <#T##UIImage#>, counter: "5117", typeCell: .scrollCell)
+                AlbumsOption(name: "Places", icon: UIImage(named: "nedevnie"), counter: "5117", typeCell: .scrollCell)
             ]),
             Section(options: [
                 AlbumsOption(name: "Videos", icon: UIImage(systemName: "video"), counter: "1039", typeCell: .listCell),

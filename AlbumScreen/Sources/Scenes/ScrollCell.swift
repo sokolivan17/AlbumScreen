@@ -74,11 +74,16 @@ class ScrollCell: UICollectionViewCell {
 
 
     // MARK: - Configuration
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        image.image = nil
+        nameCell.text = nil
+        countLabel.text = nil
+    }
 
-        override func prepareForReuse() {
-            super.prepareForReuse()
-            image.image = nil
-            nameCell.text = nil
-            countLabel.text = nil
-        }
+    public func configure(cell: AlbumsOption) {
+        image.image = cell.icon
+        nameCell.text = cell.name
+        countLabel.text = cell.counter
+    }
 }

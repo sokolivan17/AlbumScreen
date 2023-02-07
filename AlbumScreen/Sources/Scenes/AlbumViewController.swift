@@ -9,6 +9,8 @@ import UIKit
 
 class AlbumViewController: UIViewController {
 
+    private lazy var cellsData = Section.getSettingsCell()
+
     // MARK: - Outlets
 
     private lazy var collectionView: UICollectionView = {
@@ -21,7 +23,7 @@ class AlbumViewController: UIViewController {
         collectionView.register(ScrollCellWithFourImages.self, forCellWithReuseIdentifier: ScrollCellWithFourImages.fourImagesIdentifier)
         collectionView.register(ScrollCellWithHeart.self, forCellWithReuseIdentifier: ScrollCellWithHeart.heartIdentifier)
         collectionView.register(ListCell.self, forCellWithReuseIdentifier: ListCell.identifier)
-        collectionView.register(ListCellWithLock.self, forCellWithReuseIdentifier: ListCellWithLock.identifier)
+        collectionView.register(ListCellWithLock.self, forCellWithReuseIdentifier: ListCellWithLock.lockIdentifier)
         collectionView.register(Header.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -59,59 +61,41 @@ class AlbumViewController: UIViewController {
 
 extension AlbumViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        4
+        return cellsData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 5
-        case 1:
-            return 2
-        case 2:
-            return 10
-        case 3:
-            return 4
-        default:
-            return 1
-        }
+        return cellsData[section].options.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let model = cellsData[indexPath.section].options[indexPath.row]
 
-        switch indexPath.section {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCell.identifier, for: indexPath) as! ScrollCell
-            cell.image.image = UIImage(systemName: "house")
-            cell.nameCell.text = "Recents"
-            cell.countLabel.text = "483"
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCellWithFourImages.fourImagesIdentifier, for: indexPath) as! ScrollCellWithFourImages
-            cell.nameCell.text = "Recents"
-            cell.countLabel.text = "483"
-            cell.backgroundColor = .systemOrange
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as! ListCell
-            cell.image.image = UIImage(systemName: "video")
-            cell.nameCell.text = "Videos"
-            cell.countLabel.text = "1039"
-            return cell
-        case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCellWithLock.identifier, for: indexPath) as! ListCellWithLock
-            cell.image.image = UIImage(systemName: "square.and.arrow.down")
-            cell.nameCell.text = "Imports"
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCell.identifier, for: indexPath)
-            cell.backgroundColor = .systemGreen
-            return cell
+        switch model.typeCell {
+        case .scrollCell:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCell.identifier, for: indexPath) as? ScrollCell
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .scrollCellWithfourPhotos:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCellWithFourImages.fourImagesIdentifier, for: indexPath) as? ScrollCellWithFourImages
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .listCell:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .listCellWithLock:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCellWithLock.lockIdentifier, for: indexPath) as? ListCellWithLock
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .scrollCellWithHeart:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCellWithHeart.heartIdentifier, for: indexPath) as? ScrollCellWithHeart
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
 
         switch indexPath.section {
         case 0:

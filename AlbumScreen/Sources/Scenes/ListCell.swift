@@ -36,7 +36,7 @@ class ListCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var chevronImage: UIImageView = {
+    lazy var chevronImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "chevron.right")
         imageView.clipsToBounds = true
@@ -108,5 +108,11 @@ class ListCell: UICollectionViewCell {
         image.image = nil
         nameCell.text = nil
         countLabel.text = nil
+    }
+
+    public func configure(cell: AlbumsOption) {
+        image.image = cell.icon
+        nameCell.text = cell.name
+        countLabel.text = cell.counter
     }
 }
