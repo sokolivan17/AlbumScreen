@@ -7,26 +7,11 @@
 
 import UIKit
 
-class ListCellWithLock: UICollectionViewCell {
+class ListCellWithLock: ListCell {
 
-    static let identifier = "ListCellWithLock"
+    static let lockIdentifier = "ListCellWithLock"
 
     // MARK: - Outlets
-
-    lazy var image: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    lazy var nameCell: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
 
     private lazy var lockImage: UIImageView = {
         let imageView = UIImageView()
@@ -36,23 +21,6 @@ class ListCellWithLock: UICollectionViewCell {
         imageView.tintColor = .secondaryLabel
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }()
-
-    private lazy var chevronImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .secondaryLabel
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    lazy var separator: UIView = {
-        let separator = UIView(frame: .zero)
-        separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.backgroundColor = .quaternaryLabel
-        return separator
     }()
 
     // MARK: - Initializers

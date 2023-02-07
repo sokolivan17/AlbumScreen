@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  AlbumViewController.swift
 //  AlbumScreen
 //
 //  Created by Ваня Сокол on 06.02.2023.
@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class AlbumViewController: UIViewController {
+
+    private lazy var cellsData = Section.getSettingsCell()
 
     // MARK: - Outlets
 
@@ -17,10 +19,12 @@ class ViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
+        collectionView.register(ScrollCell.self, forCellWithReuseIdentifier: ScrollCell.identifier)
+        collectionView.register(ScrollCellWithFourImages.self, forCellWithReuseIdentifier: ScrollCellWithFourImages.fourImagesIdentifier)
+        collectionView.register(ScrollCellWithHeart.self, forCellWithReuseIdentifier: ScrollCellWithHeart.heartIdentifier)
         collectionView.register(ListCell.self, forCellWithReuseIdentifier: ListCell.identifier)
-        collectionView.register(ListCellWithLock.self, forCellWithReuseIdentifier: ListCellWithLock.identifier)
-        collectionView.register(CollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier)
+        collectionView.register(ListCellWithLock.self, forCellWithReuseIdentifier: ListCellWithLock.lockIdentifier)
+        collectionView.register(Header.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -53,91 +57,12 @@ class ViewController: UIViewController {
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-}
-
-extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        4
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 5
-        case 1:
-            return 2
-        case 2:
-            return 10
-        case 3:
-            return 4
-        default:
-            return 1
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        switch indexPath.section {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as! CollectionViewCell
-            cell.image.image = UIImage(systemName: "house")
-            cell.nameCell.text = "Recents"
-            cell.countLabel.text = "483"
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath)
-            cell.backgroundColor = .systemBlue
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as! ListCell
-            cell.image.image = UIImage(systemName: "video")
-            cell.nameCell.text = "Videos"
-            cell.countLabel.text = "1039"
-            return cell
-        case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCellWithLock.identifier, for: indexPath) as! ListCellWithLock
-            cell.image.image = UIImage(systemName: "square.and.arrow.down")
-            cell.nameCell.text = "Imports"
-            return cell
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath)
-            cell.backgroundColor = .systemGreen
-            return cell
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
-
-        switch indexPath.section {
-        case 0:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as! CollectionReusableView
-            header.header.text = "My albums"
-            header.button.setTitle("See All", for: .normal)
-            return header
-        case 1:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as! CollectionReusableView
-            header.header.text = "People & Places"
-            return header
-        case 2:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as! CollectionReusableView
-            header.header.text = "Media Types"
-            return header
-        case 3:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as! CollectionReusableView
-            header.header.text = "Utilities"
-            return header
-        default:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as! CollectionReusableView
-            header.header.text = "Header"
-            return header
-        }
-    }
 
     private func createLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, _ in
 
             switch sectionIndex {
+
             case 0:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalHeight(0.5))
                 let contentInset = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
@@ -149,7 +74,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 bottomItem.contentInsets = contentInset
 
                 let nestedGroup = NSCollectionLayoutGroup.vertical(
-                    layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(180), heightDimension: .absolute(500)),
+                    layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(180), heightDimension: .absolute(480)),
                     subitems: [topItem, bottomItem]
                 )
 
@@ -166,6 +91,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 sectionLayout.boundarySupplementaryItems = [layoutSectionHeader]
 
                 return sectionLayout
+
             case 1:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.49),
                                                       heightDimension: .fractionalHeight(1))
@@ -173,7 +99,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 12)
 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93),
-                                                       heightDimension: .fractionalHeight(0.32))
+                                                       heightDimension: .fractionalHeight(0.3))
                 let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [layoutItem])
 
                 let sectionLayout = NSCollectionLayoutSection(group: layoutGroup)
@@ -189,6 +115,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 sectionLayout.boundarySupplementaryItems = [layoutSectionHeader]
 
                 return sectionLayout
+
             case 2:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                       heightDimension: .fractionalHeight(1))
@@ -211,6 +138,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 sectionLayout.boundarySupplementaryItems = [layoutSectionHeader]
 
                 return sectionLayout
+
             case 3:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                       heightDimension: .fractionalHeight(1))
@@ -233,6 +161,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 sectionLayout.boundarySupplementaryItems = [layoutSectionHeader]
 
                 return sectionLayout
+                
             default:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                       heightDimension: .fractionalHeight(1))
@@ -247,6 +176,87 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
                 sectionLayout.orthogonalScrollingBehavior = .groupPaging
                 return sectionLayout
             }
+        }
+    }
+}
+
+extension AlbumViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return cellsData.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return cellsData[section].options.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let model = cellsData[indexPath.section].options[indexPath.row]
+
+        switch model.typeCell {
+        case .scrollCell:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCell.identifier, for: indexPath) as? ScrollCell
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .scrollCellWithfourPhotos:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCellWithFourImages.fourImagesIdentifier, for: indexPath) as? ScrollCellWithFourImages
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .scrollCellWithHeart:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ScrollCellWithHeart.heartIdentifier, for: indexPath) as? ScrollCellWithHeart
+            cell?.configure(cell: model)
+            return cell ?? UICollectionViewCell()
+        case .listCell:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell
+            cell?.configure(cell: model, lastCell: indexPath.item == (cellsData[indexPath.section].options.count - 1))
+            return cell ?? UICollectionViewCell()
+        case .listCellWithLock:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCellWithLock.lockIdentifier, for: indexPath) as? ListCellWithLock
+            cell?.configure(cell: model, lastCell: indexPath.item == (cellsData[indexPath.section].options.count - 1))
+            return cell ?? UICollectionViewCell()
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        switch indexPath.section {
+        case 0:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.identifier, for: indexPath) as! Header
+            header.header.text = "My Albums"
+            header.button.setTitle("See All", for: .normal)
+            return header
+        case 1:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.identifier, for: indexPath) as! Header
+            header.header.text = "People & Places"
+            return header
+        case 2:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.identifier, for: indexPath) as! Header
+            header.header.text = "Media Types"
+            return header
+        case 3:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.identifier, for: indexPath) as! Header
+            header.header.text = "Utilities"
+            return header
+        default:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Header.identifier, for: indexPath) as! Header
+            header.header.text = "Header"
+            return header
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = cellsData[indexPath.section].options[indexPath.row]
+
+        switch model.typeCell {
+        case .scrollCell:
+            print("Нажата ячейка \(model.name)")
+        case .scrollCellWithHeart:
+            print("Нажата ячейка \(model.name)")
+        case .scrollCellWithfourPhotos:
+            print("Нажата ячейка \(model.name)")
+        case .listCell:
+            print("Нажата ячейка \(model.name)")
+        case .listCellWithLock:
+            print("Нажата ячейка \(model.name)")
         }
     }
 }

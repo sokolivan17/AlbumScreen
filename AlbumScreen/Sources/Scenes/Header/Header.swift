@@ -1,5 +1,5 @@
 //
-//  CollectionReusableView.swift
+//  Header.swift
 //  AlbumScreen
 //
 //  Created by Ваня Сокол on 06.02.2023.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class CollectionReusableView: UICollectionReusableView {
+class Header: UICollectionReusableView {
 
-    static let identifier = "CollectionReusableView"
+    static let identifier = "Header"
 
     // MARK: - Outlets
 

@@ -1,40 +1,26 @@
 //
-//  CollectionViewCell.swift
+//  ScrollCellWithHeart.swift
 //  AlbumScreen
 //
-//  Created by Ваня Сокол on 06.02.2023.
+//  Created by Ваня Сокол on 07.02.2023.
 //
 
 import UIKit
 
-class CollectionViewCell: UICollectionViewCell {
+class ScrollCellWithHeart: ScrollCell {
 
-    static let identifier = "CollectionViewCell"
+    static let heartIdentifier = "ScrollCellWithHeart"
 
     // MARK: - Outlets
 
-    lazy var image: UIImageView = {
+    private lazy var heartImage: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 8
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "heart.fill")
+        imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }()
-
-    lazy var nameCell: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    lazy var countLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .secondaryLabel
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
 
     // MARK: - Initializers
@@ -55,6 +41,7 @@ class CollectionViewCell: UICollectionViewCell {
         addSubview(image)
         addSubview(nameCell)
         addSubview(countLabel)
+        addSubview(heartImage)
     }
 
     private func setupLayout() {
@@ -64,6 +51,11 @@ class CollectionViewCell: UICollectionViewCell {
             image.rightAnchor.constraint(equalTo: rightAnchor),
             image.heightAnchor.constraint(equalToConstant: 180),
 
+            heartImage.leftAnchor.constraint(equalTo: image.leftAnchor, constant: 5),
+            heartImage.bottomAnchor.constraint(equalTo: image.bottomAnchor, constant: -5),
+            heartImage.heightAnchor.constraint(equalToConstant: Metrics.heightAndWidthHeartImage),
+            heartImage.widthAnchor.constraint(equalToConstant: Metrics.heightAndWidthHeartImage),
+
             nameCell.leftAnchor.constraint(equalTo: image.leftAnchor),
             nameCell.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 5),
 
@@ -71,14 +63,10 @@ class CollectionViewCell: UICollectionViewCell {
             countLabel.topAnchor.constraint(equalTo: nameCell.bottomAnchor, constant: 5),
         ])
     }
+}
 
-
-    // MARK: - Configuration
-
-        override func prepareForReuse() {
-            super.prepareForReuse()
-            image.image = nil
-            nameCell.text = nil
-            countLabel.text = nil
-        }
+extension ScrollCellWithHeart {
+    enum Metrics {
+        static let heightAndWidthHeartImage: CGFloat = 20
+    }
 }
