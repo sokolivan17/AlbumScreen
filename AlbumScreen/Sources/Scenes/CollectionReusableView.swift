@@ -20,6 +20,13 @@ class CollectionReusableView: UICollectionReusableView {
         return label
     }()
 
+    lazy var button: UIButton = {
+        let button = UIButton(type: .system)
+        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .regular)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     private lazy var separator: UIView = {
         let separator = UIView(frame: .zero)
         separator.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +51,7 @@ class CollectionReusableView: UICollectionReusableView {
     private func setupHierarchy() {
         addSubview(header)
         addSubview(separator)
+        addSubview(button)
     }
 
     private func setupLayout() {
@@ -54,7 +62,10 @@ class CollectionReusableView: UICollectionReusableView {
             separator.rightAnchor.constraint(equalTo: rightAnchor),
 
             header.leftAnchor.constraint(equalTo: leftAnchor),
-            header.centerYAnchor.constraint(equalTo: centerYAnchor)
+            header.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+            button.rightAnchor.constraint(equalTo: rightAnchor, constant: -22),
+            button.bottomAnchor.constraint(equalTo: header.bottomAnchor)
         ])
     }
 
@@ -62,6 +73,7 @@ class CollectionReusableView: UICollectionReusableView {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.header.text = nil
+        header.text = nil
+        button.setTitle(nil, for: .normal)
     }
 }
