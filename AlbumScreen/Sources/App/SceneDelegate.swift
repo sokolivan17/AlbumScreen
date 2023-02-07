@@ -32,7 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         searchViewController.view.backgroundColor = .systemTeal
         searchViewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 3)
 
-
         tabBarController.setViewControllers([
             libraryViewController,
             foryouViewController,

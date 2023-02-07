@@ -34,7 +34,7 @@ class ScrollCellWithFourImages: ScrollCell {
         imageView.image = UIImage(named: name)
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 40
+        imageView.layer.cornerRadius = (Metrics.heightAndWidthImages / 2)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
@@ -64,23 +64,23 @@ class ScrollCellWithFourImages: ScrollCell {
         NSLayoutConstraint.activate([
             firstImage.leftAnchor.constraint(equalTo: leftAnchor),
             firstImage.topAnchor.constraint(equalTo: topAnchor),
-            firstImage.heightAnchor.constraint(equalToConstant: 80),
-            firstImage.widthAnchor.constraint(equalToConstant: 80),
+            firstImage.heightAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
+            firstImage.widthAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
 
-            secondImage.leftAnchor.constraint(equalTo: firstImage.rightAnchor,constant: 6),
+            secondImage.leftAnchor.constraint(equalTo: firstImage.rightAnchor,constant: Metrics.distanceBetweenImages),
             secondImage.topAnchor.constraint(equalTo: topAnchor),
-            secondImage.heightAnchor.constraint(equalToConstant: 80),
-            secondImage.widthAnchor.constraint(equalToConstant: 80),
+            secondImage.heightAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
+            secondImage.widthAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
 
             thirdImage.leftAnchor.constraint(equalTo: leftAnchor),
-            thirdImage.topAnchor.constraint(equalTo: firstImage.bottomAnchor, constant: 6),
-            thirdImage.heightAnchor.constraint(equalToConstant: 80),
-            thirdImage.widthAnchor.constraint(equalToConstant: 80),
+            thirdImage.topAnchor.constraint(equalTo: firstImage.bottomAnchor, constant: Metrics.distanceBetweenImages),
+            thirdImage.heightAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
+            thirdImage.widthAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
 
-            fourthImage.leftAnchor.constraint(equalTo: thirdImage.rightAnchor, constant: 6),
-            fourthImage.topAnchor.constraint(equalTo: secondImage.bottomAnchor, constant: 6),
-            fourthImage.heightAnchor.constraint(equalToConstant: 80),
-            fourthImage.widthAnchor.constraint(equalToConstant: 80),
+            fourthImage.leftAnchor.constraint(equalTo: thirdImage.rightAnchor, constant: Metrics.distanceBetweenImages),
+            fourthImage.topAnchor.constraint(equalTo: secondImage.bottomAnchor, constant: Metrics.distanceBetweenImages),
+            fourthImage.heightAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
+            fourthImage.widthAnchor.constraint(equalToConstant: Metrics.heightAndWidthImages),
 
             nameCell.leftAnchor.constraint(equalTo: image.leftAnchor),
             nameCell.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 5),
@@ -88,5 +88,12 @@ class ScrollCellWithFourImages: ScrollCell {
             countLabel.leftAnchor.constraint(equalTo: nameCell.leftAnchor),
             countLabel.topAnchor.constraint(equalTo: nameCell.bottomAnchor, constant: 5),
         ])
+    }
+}
+
+extension ScrollCellWithFourImages {
+    enum Metrics {
+        static let heightAndWidthImages: CGFloat = 82
+        static let distanceBetweenImages: CGFloat = 4
     }
 }

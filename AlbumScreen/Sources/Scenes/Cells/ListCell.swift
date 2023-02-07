@@ -23,14 +23,14 @@ class ListCell: UICollectionViewCell {
 
     lazy var nameCell: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: Metrics.fontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     lazy var countLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .systemFont(ofSize: Metrics.fontSize, weight: .regular)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -79,16 +79,16 @@ class ListCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             image.leftAnchor.constraint(equalTo: leftAnchor),
             image.centerYAnchor.constraint(equalTo: centerYAnchor),
-            image.heightAnchor.constraint(equalToConstant: 30),
-            image.widthAnchor.constraint(equalToConstant: 30),
+            image.heightAnchor.constraint(equalToConstant: Metrics.heightAndWidthImage),
+            image.widthAnchor.constraint(equalToConstant: Metrics.heightAndWidthImage),
 
             nameCell.leftAnchor.constraint(equalTo: image.rightAnchor,constant: 10),
             nameCell.centerYAnchor.constraint(equalTo: image.centerYAnchor),
 
             chevronImage.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
             chevronImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            chevronImage.heightAnchor.constraint(equalToConstant: 20),
-            chevronImage.widthAnchor.constraint(equalToConstant: 20),
+            chevronImage.heightAnchor.constraint(equalToConstant: Metrics.heightAndWidthChevronImage),
+            chevronImage.widthAnchor.constraint(equalToConstant: Metrics.heightAndWidthChevronImage),
 
             countLabel.rightAnchor.constraint(equalTo: chevronImage.leftAnchor, constant: -10),
             countLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -114,5 +114,13 @@ class ListCell: UICollectionViewCell {
         image.image = cell.icon
         nameCell.text = cell.name
         countLabel.text = cell.counter
+    }
+}
+
+extension ListCell {
+    enum Metrics {
+        static let heightAndWidthImage: CGFloat = 30
+        static let fontSize: CGFloat = 18
+        static let heightAndWidthChevronImage: CGFloat = 20
     }
 }
