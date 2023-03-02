@@ -1,17 +1,26 @@
 //
-//  AlbumViewController.swift
+//  AlbumView.swift
 //  AlbumScreen
 //
-//  Created by Ваня Сокол on 06.02.2023.
+//  Created by Ваня Сокол on 02.03.2023.
 //
 
 import UIKit
 
-class AlbumViewController: UIViewController {
+class AlbumView: UIView {
 
-    private lazy var cellsData = Section.getSettingsCell()
+    // MARK: - Configuration
 
-    // MARK: - Outlets
+    func configureView(with models: [Section]) {
+        self.cellsData = models
+        collectionView.reloadData()
+    }
+
+    // MARK: - Private properties
+
+    private var cellsData = [Section]()
+
+    // MARK: - Views
 
     private lazy var collectionView: UICollectionView = {
         let layout = createLayout()
@@ -29,32 +38,30 @@ class AlbumViewController: UIViewController {
         return collectionView
     }()
 
-    // MARK: - Lifecycle
+    // MARK: - Initializers
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Albums"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.isTranslucent = true
-        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: nil)
-        self.navigationItem.leftBarButtonItem = leftButton
-
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupHierarchy()
         setupLayout()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Setup
 
     private func setupHierarchy() {
-        view.addSubview(collectionView)
+        addSubview(collectionView)
     }
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+        collectionView.topAnchor.constraint(equalTo: topAnchor),
+        collectionView.rightAnchor.constraint(equalTo: rightAnchor),
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
@@ -161,7 +168,7 @@ class AlbumViewController: UIViewController {
                 sectionLayout.boundarySupplementaryItems = [layoutSectionHeader]
 
                 return sectionLayout
-                
+
             default:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                       heightDimension: .fractionalHeight(1))
@@ -180,7 +187,9 @@ class AlbumViewController: UIViewController {
     }
 }
 
-extension AlbumViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+
+extension AlbumView: UICollectionViewDataSource, UICollectionViewDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return cellsData.count
     }
@@ -260,4 +269,3 @@ extension AlbumViewController: UICollectionViewDataSource, UICollectionViewDeleg
         }
     }
 }
-

@@ -72,7 +72,6 @@ class ListCellWithLock: ListCell {
         ])
     }
 
-
     // MARK: - Configuration
 
     override func prepareForReuse() {

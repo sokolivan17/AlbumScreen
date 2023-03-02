@@ -118,6 +118,8 @@ class ListCell: UICollectionViewCell {
     }
 }
 
+// MARK: - Consatnts
+
 extension ListCell {
     enum Metrics {
         static let heightAndWidthImage: CGFloat = 30

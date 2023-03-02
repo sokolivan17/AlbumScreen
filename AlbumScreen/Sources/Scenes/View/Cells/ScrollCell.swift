@@ -74,6 +74,7 @@ class ScrollCell: UICollectionViewCell {
 
 
     // MARK: - Configuration
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         image.image = nil
@@ -87,6 +88,8 @@ class ScrollCell: UICollectionViewCell {
         countLabel.text = cell.counter
     }
 }
+
+// MARK: - Consatnts
 
 extension ScrollCell {
     enum Metrics {

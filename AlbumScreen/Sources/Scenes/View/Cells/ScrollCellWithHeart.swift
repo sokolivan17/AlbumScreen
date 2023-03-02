@@ -65,6 +65,8 @@ class ScrollCellWithHeart: ScrollCell {
     }
 }
 
+// MARK: - Consatnts
+
 extension ScrollCellWithHeart {
     enum Metrics {
         static let heightAndWidthHeartImage: CGFloat = 20
