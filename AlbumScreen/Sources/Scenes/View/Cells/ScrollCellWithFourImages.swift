@@ -91,6 +91,8 @@ class ScrollCellWithFourImages: ScrollCell {
     }
 }
 
+// MARK: - Consatnts
+
 extension ScrollCellWithFourImages {
     enum Metrics {
         static let heightAndWidthImages: CGFloat = 82
